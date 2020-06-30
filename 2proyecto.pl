@@ -18,6 +18,24 @@ guardarFila(X, [E1,E2,E3,E4,E5]):- assert(celda(X,1,E1)),
                                    assert(celda(X,5,E5)).
               
 
+
+
+/* FALTA TERMINAR ÉSTOS PREDICADOS QUE REALIZAN EL MOVIMIENTO EN EL TABLERO */
+
+mover(izq, NumDeFila, Cant):- 
+
+mover(der, NumDeFila, Cant):-
+   
+
+mover(arriba, NumDeColumna, Cant):-
+                                     
+mover(abajo, NumDeColumna, Cant):- forall(celda(F,NumDeColumna,X),
+                                          NuevaF is (F+Cant) mod 5,
+                                          assert(celda(NuevaF,NumDeColumna, X)),
+                                          retract(celda(F,NumDeColumna,X))).
+                                     
+
+
 /*
 CONSULTA
 guardarTablero([[r1, v2, a1, r1, a1],[a2, v1, v1, r2, r2],[a1, r2, a3, v1, a2],[r3, r2, r1, a3, v1],[v3, a1, v2,
