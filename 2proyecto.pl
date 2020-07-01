@@ -19,21 +19,23 @@ guardarFila(X, [E1,E2,E3,E4,E5]):- assert(celda(X,1,E1)),
               
 
 
+/* FALTA TESTEAR TODOS LOS PREDICADOS MOVER */
 
-/* FALTA TERMINAR ÉSTOS PREDICADOS QUE REALIZAN EL MOVIMIENTO EN EL TABLERO */
+mover(izq, NumDeFila, Cant):- C is 5-Cant, moverFila(NumDeFila,Cant).
+mover(der, NumDeFila, Cant):- moverFila(NumDeFila,Cant).   
+mover(arriba, NumDeColumna, Cant):- C is 5-Cant, moverColumna(NumDeColumna,C).
+mover(abajo, NumDeColumna, Cant):- moverColumna(NumDeColumna,Cant).
 
-mover(izq, NumDeFila, Cant):- 
 
-mover(der, NumDeFila, Cant):-
-   
-
-mover(arriba, NumDeColumna, Cant):-
-                                     
-mover(abajo, NumDeColumna, Cant):- forall(celda(F,NumDeColumna,X),
+moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X),
                                           NuevaF is (F+Cant) mod 5,
                                           assert(celda(NuevaF,NumDeColumna, X)),
                                           retract(celda(F,NumDeColumna,X))).
-                                     
+
+moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X),
+                                   NuevaC is (C+Cant) mod 5,
+                                   assert(celda(NumDeFila,NuevaC, X)),
+                                   retract(celda(NumDeFila,C,X))).                          
 
 
 /*
