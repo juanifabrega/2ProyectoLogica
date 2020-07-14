@@ -55,6 +55,65 @@ filaALista(Fila,Lista):- celda(Fila,0,M1),
                          celda(Fila,4,M5),
                          Lista = [M1,M2,M3,M4,M5].
 
+buscarColapsoFila0():- buscarColapsoFila(0,5);
+    				   buscarColapsoFila(0,4);
+    				   buscarColapsoFila(0,3).
+
+buscarColapsoFila(0,5):-
+    celda(0,0,X),
+    celda(0,1,X),
+    celda(0,2,X),
+    celda(0,3,X),
+    celda(0,4,X),
+    assert(celdaMarcada(0,0)),
+    assert(celdaMarcada(0,1)),
+    assert(celdaMarcada(0,2)),
+    assert(celdaMarcada(0,3)),
+    assert(celdaMarcada(0,4)),
+    assert(celdaMarcada(0,5)).
+
+buscarColapsoFila(0,4):-
+    celda(0,0,X),
+    celda(0,1,X),
+    celda(0,2,X),
+    celda(0,3,X),
+    assert(celdaMarcada(0,0)),
+    assert(celdaMarcada(0,1)),
+    assert(celdaMarcada(0,2)),
+    assert(celdaMarcada(0,3)),
+    assert(celdaMarcada(0,4));
+    celda(0,1,X),
+    celda(0,2,X),
+    celda(0,3,X),
+    celda(0,4,X),
+    assert(celdaMarcada(0,1)),
+    assert(celdaMarcada(0,2)),
+    assert(celdaMarcada(0,3)),
+    assert(celdaMarcada(0,4)).
+
+buscarColapsoFila(0,3):-
+    celda(0,0,X),
+    celda(0,1,X),
+    celda(0,2,X),
+    assert(celdaMarcada(0,0)),
+    assert(celdaMarcada(0,1)),
+    assert(celdaMarcada(0,2));   
+    celda(0,1,X),
+    celda(0,2,X),
+    celda(0,3,X),
+    assert(celdaMarcada(0,1)),
+    assert(celdaMarcada(0,2)),
+    assert(celdaMarcada(0,3));
+    celda(0,2,X),
+    celda(0,3,X),
+    celda(0,4,X),
+    assert(celdaMarcada(0,2)),
+    assert(celdaMarcada(0,3)),
+    assert(celdaMarcada(0,4)).   
+
+
+
+
 
 
 /*
