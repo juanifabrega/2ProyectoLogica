@@ -37,36 +37,16 @@ moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X),
                                     retract(celda(NumDeFila,C,X)))).
 
 
-/* INICIO HECHOS A TABLERO  -  VERSION JUANI */
-mostrarTablero:- pasarAfilas(R), write(R).
 
-pasarAfilas([Fila1,Fila2,Fila3,Fila4,Fila5]):-
-    pasarFila(1,Fila1),
-    pasarFila(2,Fila2),
-    pasarFila(3,Fila3),
-    pasarFila(4,Fila4),
-    pasarFila(5,Fila5).
-
-pasarFila(F,[E1,E2,E3,E4,E5]):-
-    celda(F,1,E1),
-    celda(F,2,E2),
-    celda(F,3,E3),
-    celda(F,4,E4),
-    celda(F,5,E5).
-/* FIN HECHOS A TABLERO  -  VERSION JUANI */
-             
-
-
-
-/* INICIO HECHOS A TABLERO  -  VERSION MATI */
+/* TRANSFORMAR HECHOS A TABLERO */
 mostrarTablero(T):- hechosATablero(T).
 
 hechosATablero(T):- filaALista(0,L1),
-            filaALista(1,L2),
-            filaALista(2,L3),
-            filaALista(3,L4),
-            filaALista(4,L5),
-            T = [L1,L2,L3,L4,L5].
+                    filaALista(1,L2),
+                    filaALista(2,L3),
+                    filaALista(3,L4),
+                    filaALista(4,L5),
+                    T = [L1,L2,L3,L4,L5].
     
 filaALista(Fila,Lista):- celda(Fila,0,M1),
                          celda(Fila,1,M2),
@@ -74,9 +54,6 @@ filaALista(Fila,Lista):- celda(Fila,0,M1),
                          celda(Fila,3,M4),
                          celda(Fila,4,M5),
                          Lista = [M1,M2,M3,M4,M5].
-/* FIN HECHOS A TABLERO  -  VERSION MATI */
-
-
 
 
 
@@ -91,6 +68,7 @@ r2, v1]]), mostrarTablero(Tablero).
 OTRA CONSULTA MAS FACIL:
 guardarTablero([[1, 2, 3, 4, 5],[6, 7, 8, 9, 10],[11, 12, 13, 14, 15],[16, 17, 18, 19, 20],[21, 22, 23,
 24, 25]]),
-mover(izq,4,2),
-mostrarTablero(Tablero).
+mostrarTablero(Tablero1),
+mover(der,0,1),
+mostrarTablero(Tablero2).
 */
