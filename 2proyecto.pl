@@ -1,4 +1,5 @@
 :-dynamic celda/3.
+:-use_rendering(table).
 
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero).*/
@@ -35,7 +36,23 @@ moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X),
 moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X),
                                    NuevaC is (C+Cant) mod 5,
                                    assert(celda(NumDeFila,NuevaC, X)),
-                                   retract(celda(NumDeFila,C,X))).                          
+                                   retract(celda(NumDeFila,C,X))).
+                                   
+mostrarTablero:- pasarAfilas(R), write(R).
+
+pasarAfilas([Fila1,Fila2,Fila3,Fila4,Fila5]):-
+    pasarFila(1,Fila1),
+    pasarFila(2,Fila2),
+    pasarFila(3,Fila3),
+    pasarFila(4,Fila4),
+    pasarFila(5,Fila5).
+
+pasarFila(F,[E1,E2,E3,E4,E5]):-
+    celda(F,1,E1),
+    celda(F,2,E2),
+    celda(F,3,E3),
+    celda(F,4,E4),
+    celda(F,5,E5).
 
 
 /*
