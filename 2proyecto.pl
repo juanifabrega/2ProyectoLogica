@@ -169,6 +169,11 @@ buscarTodosLosColapsos(Lrta):-
 
 
 
+obtenerCentro([_,E2,_],E2).     % Lista de 3 elementos
+obtenerCentro([_,E2,_,_],E2).   % Lista de 4 elementos
+obtenerCentro([_,_,E3,_,_],E3). % Lista de 5 elementos
+
+
 /*
 CONSULTA
 guardarTablero([[r1, v2, a1, r1, a1],[a2, v1, v1, r2, r2],[a1, r2, a3, v1, a2],[r3, r2, r1, a3, v1],[v3, a1, v2,
