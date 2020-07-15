@@ -118,7 +118,58 @@ buscarColapsoFila(NumDeFila,3,L,Lrta):-
 
 buscarColapsoFila:-true.
 
+buscarColapsoDeColumnas(L,Lrta):-
+    buscarColapsoColumna(0,L,L1),
+    buscarColapsoColumna(1,L1,L2),
+    buscarColapsoColumna(2,L2,L3),
+    buscarColapsoColumna(3,L3,L4),
+    buscarColapsoColumna(4,L4,Lrta).
 
+buscarColapsoColumna(NumDeColumna,Lista,ListaNueva):- 
+    buscarColapsoColumna(NumDeColumna,5,Lista,ListaNueva);
+    buscarColapsoColumna(NumDeColumna,4,Lista,ListaNueva);
+    buscarColapsoColumna(NumDeColumna,3,Lista,ListaNueva);
+    ListaNueva=Lista.
+
+buscarColapsoColumna(NumDeColumna,5,L,Lrta):-
+    celda(0,NumDeColumna,X),
+    celda(1,NumDeColumna,X),
+    celda(2,NumDeColumna,X),
+    celda(3,NumDeColumna,X),
+    celda(4,NumDeColumna,X),
+    Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta).
+
+buscarColapsoColumna(NumDeColumna,4,L,Lrta):-
+    celda(0,NumDeColumna,X),
+    celda(1,NumDeColumna,X),
+    celda(2,NumDeColumna,X),
+    celda(3,NumDeColumna,X),
+    Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta);
+    celda(1,NumDeColumna,X),
+    celda(2,NumDeColumna,X),
+    celda(3,NumDeColumna,X),
+    celda(4,NumDeColumna,X),
+    Lista=[[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta).
+
+buscarColapsoColumna(NumDeColumna,3,L,Lrta):-
+    celda(0,NumDeColumna,X),
+    celda(1,NumDeColumna,X),
+    celda(2,NumDeColumna,X),
+    Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta);   
+    celda(1,NumDeColumna,X),
+    celda(2,NumDeColumna,X),
+    celda(3,NumDeColumna,X),
+    Lista=[[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta);
+    celda(2,NumDeColumna,X),
+    celda(3,NumDeColumna,X),
+    celda(4,NumDeColumna,X),
+    Lista=[[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
+    insertar_ultimo(Lista,L,Lrta).
 
 
 
