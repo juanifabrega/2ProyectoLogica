@@ -2,7 +2,10 @@
 :-dynamic celda/3.
 
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
-    guardarTablero(Tablero).*/
+    guardarTablero(Tablero),
+    mover(Dir,Num-1,Cant),
+    buscarColapsoDeFilas(L),    
+    */
 
 guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(0,Fila1),
