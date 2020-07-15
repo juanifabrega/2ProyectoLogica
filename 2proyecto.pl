@@ -1,10 +1,11 @@
-:-use_rendering(table).
+/*:-use_rendering(table).*/
 :-dynamic celda/3.
 
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero),
     mover(Dir,Num-1,Cant),
-    buscarColapsoDeFilas(L),    
+    buscarColapsoDeFilas(L,Lrta),
+    
     */
 
 guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
@@ -68,11 +69,12 @@ buscarColapsosDeFilas(L,Lrta):-
     buscarColapsoFila(3,L3,L4),
     buscarColapsoFila(4,L4,Lrta).
 
+
 buscarColapsoFila(NumDeFila,Lista,ListaNueva):- 
     buscarColapsoFila(NumDeFila,5,Lista,ListaNueva);
     buscarColapsoFila(NumDeFila,4,Lista,ListaNueva);
-    buscarColapsoFila(NumDeFila,3,Lista,ListaNueva),
-    buscarColapsoFila.
+    buscarColapsoFila(NumDeFila,3,Lista,ListaNueva);
+    ListaNueva=Lista.
 
 buscarColapsoFila(NumDeFila,5,L,Lrta):-
     celda(NumDeFila,0,X),
@@ -134,4 +136,4 @@ guardarTablero([[1, 2, 3, 4, 5],[6, 7, 8, 9, 10],[11, 12, 13, 14, 15],[16, 17, 1
 mostrarTablero(Tablero1),
 mover(der,0,1),
 mostrarTablero(Tablero2).
-*/
+*/  
