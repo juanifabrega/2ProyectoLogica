@@ -58,62 +58,63 @@ filaALista(Fila,Lista):- celda(Fila,0,M1),
                          celda(Fila,4,M5),
                          Lista = [M1,M2,M3,M4,M5].
 
-buscarColapsoFila0():- buscarColapsoFila(0,5);
-    				   buscarColapsoFila(0,4);
-    				   buscarColapsoFila(0,3).
+insertar_ultimo(X,[],[X]).
+insertar_ultimo(X,[Y|L2],[Y|L3]):- insertar_ultimo(X,L2,L3). 
 
-buscarColapsoFila(0,5):-
-    celda(0,0,X),
-    celda(0,1,X),
-    celda(0,2,X),
-    celda(0,3,X),
-    celda(0,4,X),
-    assert(celdaMarcada(0,0)),
-    assert(celdaMarcada(0,1)),
-    assert(celdaMarcada(0,2)),
-    assert(celdaMarcada(0,3)),
-    assert(celdaMarcada(0,4)),
-    assert(celdaMarcada(0,5)).
+buscarColapsosDeFilas(L,Lrta):-
+    buscarColapsoFila(0,L,L1),
+    buscarColapsoFila(1,L1,L2),
+    buscarColapsoFila(2,L2,L3),
+    buscarColapsoFila(3,L3,L4),
+    buscarColapsoFila(4,L4,Lrta).
 
-buscarColapsoFila(0,4):-
-    celda(0,0,X),
-    celda(0,1,X),
-    celda(0,2,X),
-    celda(0,3,X),
-    assert(celdaMarcada(0,0)),
-    assert(celdaMarcada(0,1)),
-    assert(celdaMarcada(0,2)),
-    assert(celdaMarcada(0,3)),
-    assert(celdaMarcada(0,4));
-    celda(0,1,X),
-    celda(0,2,X),
-    celda(0,3,X),
-    celda(0,4,X),
-    assert(celdaMarcada(0,1)),
-    assert(celdaMarcada(0,2)),
-    assert(celdaMarcada(0,3)),
-    assert(celdaMarcada(0,4)).
+buscarColapsoFila(NumDeFila,Lista,ListaNueva):- 
+    buscarColapsoFila(NumDeFila,5,Lista,ListaNueva);
+    buscarColapsoFila(NumDeFila,4,Lista,ListaNueva);
+    buscarColapsoFila(NumDeFila,3,Lista,ListaNueva),
+    buscarColapsoFila.
 
-buscarColapsoFila(0,3):-
-    celda(0,0,X),
-    celda(0,1,X),
-    celda(0,2,X),
-    assert(celdaMarcada(0,0)),
-    assert(celdaMarcada(0,1)),
-    assert(celdaMarcada(0,2));   
-    celda(0,1,X),
-    celda(0,2,X),
-    celda(0,3,X),
-    assert(celdaMarcada(0,1)),
-    assert(celdaMarcada(0,2)),
-    assert(celdaMarcada(0,3));
-    celda(0,2,X),
-    celda(0,3,X),
-    celda(0,4,X),
-    assert(celdaMarcada(0,2)),
-    assert(celdaMarcada(0,3)),
-    assert(celdaMarcada(0,4)).   
+buscarColapsoFila(NumDeFila,5,L,Lrta):-
+    celda(NumDeFila,0,X),
+    celda(NumDeFila,1,X),
+    celda(NumDeFila,2,X),
+    celda(NumDeFila,3,X),
+    celda(NumDeFila,4,X),
+    Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
+    insertar_ultimo(Lista,L,Lrta).
 
+buscarColapsoFila(NumDeFila,4,L,Lrta):-
+    celda(NumDeFila,0,X),
+    celda(NumDeFila,1,X),
+    celda(NumDeFila,2,X),
+    celda(NumDeFila,3,X),
+    Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2],[NumDeFila,3]],
+    insertar_ultimo(Lista,L,Lrta);
+    celda(NumDeFila,1,X),
+    celda(NumDeFila,2,X),
+    celda(NumDeFila,3,X),
+    celda(NumDeFila,4,X),
+    Lista=[[NumDeFila,1],[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
+    insertar_ultimo(Lista,L,Lrta).
+ 
+buscarColapsoFila(NumDeFila,3,L,Lrta):-
+    celda(NumDeFila,0,X),
+    celda(NumDeFila,1,X),
+    celda(NumDeFila,2,X),
+    Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2]],
+    insertar_ultimo(Lista,L,Lrta);   
+    celda(NumDeFila,1,X),
+    celda(NumDeFila,2,X),
+    celda(NumDeFila,3,X),
+    Lista=[[NumDeFila,1],[NumDeFila,2],[NumDeFila,3]],
+    insertar_ultimo(Lista,L,Lrta);
+    celda(NumDeFila,2,X),
+    celda(NumDeFila,3,X),
+    celda(NumDeFila,4,X),
+    Lista=[[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
+    insertar_ultimo(Lista,L,Lrta).   
+
+buscarColapsoFila:-true.
 
 
 
