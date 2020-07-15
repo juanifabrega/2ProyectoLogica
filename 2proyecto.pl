@@ -4,7 +4,7 @@
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero),
     mover(Dir,Num-1,Cant),
-    buscarColapsoDeFilas(L,Lrta),
+    buscarTodosLosColapsos(L),
     
     */
 
@@ -170,6 +170,11 @@ buscarColapsoColumna(NumDeColumna,3,L,Lrta):-
     celda(4,NumDeColumna,X),
     Lista=[[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta).
+
+
+buscarTodosLosColapsos(Lrta):-
+    buscarColapsosDeFilas([],L1),
+    buscarColapsoDeColumnas(L1,Lrta).
 
 
 
