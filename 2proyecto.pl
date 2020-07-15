@@ -15,20 +15,16 @@ guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(3,Fila4),
     guardarFila(4,Fila5).
 
-
 guardarFila(X, [E1,E2,E3,E4,E5]):- assert(celda(X,0,E1)),
                                    assert(celda(X,1,E2)),
                                    assert(celda(X,2,E3)),
                                    assert(celda(X,3,E4)),
                                    assert(celda(X,4,E5)).
               
-
-
 mover(izq, NumDeFila, Cant):- C is 5-Cant, moverFila(NumDeFila,C).
 mover(der, NumDeFila, Cant):- moverFila(NumDeFila,Cant).   
 mover(arriba, NumDeColumna, Cant):- C is 5-Cant, moverColumna(NumDeColumna,C).
 mover(abajo, NumDeColumna, Cant):- moverColumna(NumDeColumna,Cant).
-
 
 moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X),
                                          (NuevaF is ((F+Cant) mod 5),
@@ -39,7 +35,6 @@ moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X),
                                    (NuevaC is ((C+Cant) mod 5),
                                     assert(celda(NumDeFila,NuevaC, X)),
                                     retract(celda(NumDeFila,C,X)))).
-
 
 
 /* TRANSFORMAR HECHOS A TABLERO */
@@ -68,7 +63,6 @@ buscarColapsosDeFilas(L,Lrta):-
     buscarColapsoFila(2,L2,L3),
     buscarColapsoFila(3,L3,L4),
     buscarColapsoFila(4,L4,Lrta).
-
 
 buscarColapsoFila(NumDeFila,Lista,ListaNueva):- 
     buscarColapsoFila(NumDeFila,5,Lista,ListaNueva);
@@ -116,9 +110,7 @@ buscarColapsoFila(NumDeFila,3,L,Lrta):-
     Lista=[[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
     insertar_ultimo(Lista,L,Lrta).   
 
-buscarColapsoFila:-true.
-
-buscarColapsoDeColumnas(L,Lrta):-
+buscarColapsosDeColumnas(L,Lrta):-
     buscarColapsoColumna(0,L,L1),
     buscarColapsoColumna(1,L1,L2),
     buscarColapsoColumna(2,L2,L3),
@@ -171,10 +163,9 @@ buscarColapsoColumna(NumDeColumna,3,L,Lrta):-
     Lista=[[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta).
 
-
 buscarTodosLosColapsos(Lrta):-
     buscarColapsosDeFilas([],L1),
-    buscarColapsoDeColumnas(L1,Lrta).
+    buscarColapsosDeColumnas(L1,Lrta).
 
 
 
