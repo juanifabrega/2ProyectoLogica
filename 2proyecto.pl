@@ -1,5 +1,16 @@
-/*:-use_rendering(table).*/
+:-use_rendering(table).
 :-dynamic celda/4.
+
+/*_____________________________________________________
+LEYENDA CELDA:
+  celda(Fila,Columna,ValorMamushka,EstadoActual).
+  
+      0 <= Fila,Columna <= 4
+      ValorMamushka: v1,v2,v3, r1,r2,r3, a1,a2,a3
+      EstadoActual: sincambios, borrar, agrandar
+_______________________________________________________*/
+
+
 
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero),
