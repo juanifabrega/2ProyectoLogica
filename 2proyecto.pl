@@ -10,8 +10,6 @@ LEYENDA CELDA:
       EstadoActual: sincambios, borrar, agrandar
 _______________________________________________________*/
 
-
-
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero),
     mover(Dir,Num-1,Cant),
@@ -46,9 +44,9 @@ moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X,_),
                                    (NuevaC is ((C+Cant) mod 5),
                                     assert(celda(NumDeFila,NuevaC, X,_)),
                                     retract(celda(NumDeFila,C,X,_)))).
-
-
-/* TRANSFORMAR HECHOS A TABLERO */
+/*------------------------------------------------------------------------*/
+/* DPS HAY Q BORRAR ESTOS PREDICADOS PQ NO NOS SIRVER*/
+/* mostrar tablero */
 mostrarTablero(T):- hechosATablero(T).
 
 hechosATablero(T):- filaALista(0,L1),
@@ -64,9 +62,7 @@ filaALista(Fila,Lista):- celda(Fila,0,M1,_),
                          celda(Fila,3,M4,_),
                          celda(Fila,4,M5,_),
                          Lista = [M1,M2,M3,M4,M5].
-/*------------------------------------------------------------*/
-/* MOSTRAR TABLEROS DE ESTADOS*/
-/* DPS HAY QUE BORRARLOS*/
+/*mostrar estados*/
 mostrarEstados(T):- estadosATablero(T).
 estadosATablero(T):-filaAListaEstados(0,L1),
                     filaAListaEstados(1,L2),
@@ -81,8 +77,7 @@ filaAListaEstados(Fila,Lista):-
                          celda(Fila,3,_,M4),
                          celda(Fila,4,_,M5),
                          Lista = [M1,M2,M3,M4,M5].        
-/*-----------------------------------------------------*/
-    
+/*----------------------------------------------------------------------*/
 
 insertar_ultimo(X,[],[X]).
 insertar_ultimo(X,[Y|L2],[Y|L3]):- insertar_ultimo(X,L2,L3). 
@@ -208,9 +203,7 @@ siguienteEstado(agrandar,agrandar).
 obtenerFila([E1,_],E1).
 obtenerColumna([_,E2],E2).
 
-
-
-recorrerLista(Lista):-
+marcarColapsosYcentrosComunes(Lista):-
     forall(member(ListaColapso,Lista),
            (forall(member(Elemento,ListaColapso),
                    (obtenerFila(Elemento,Fila),
@@ -276,11 +269,11 @@ ponerCentro(L):-
     retract(celda(Fila,Columna,Valor,Estado)),
     assert(celda(Fila,Columna,Valor,agrandar)).
     
-recorrerListaDeNuevo(L):-
+marcarCentrosFinal(L):-
     forall(member(ListaColapso,L),
            tieneCentro(ListaColapso)         
            ).
-
+marcar(L):- marcarColapsosYcentrosComunes(L), marcarCentrosFinal(L).
 
 /*
 CONSULTA
