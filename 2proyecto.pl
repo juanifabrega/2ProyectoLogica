@@ -1,5 +1,5 @@
 /*:-use_rendering(table).*/
-:-dynamic celda/3.
+:-dynamic celda/4.
 
  /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
     guardarTablero(Tablero),
@@ -15,26 +15,26 @@ guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(3,Fila4),
     guardarFila(4,Fila5).
 
-guardarFila(X, [E1,E2,E3,E4,E5]):- assert(celda(X,0,E1)),
-                                   assert(celda(X,1,E2)),
-                                   assert(celda(X,2,E3)),
-                                   assert(celda(X,3,E4)),
-                                   assert(celda(X,4,E5)).
+guardarFila(X, [E1,E2,E3,E4,E5]):- assert(celda(X,0,E1,sincambios)),
+                                   assert(celda(X,1,E2,sincambios)),
+                                   assert(celda(X,2,E3,sincambios)),
+                                   assert(celda(X,3,E4,sincambios)),
+                                   assert(celda(X,4,E5,sincambios)).
               
 mover(izq, NumDeFila, Cant):- C is 5-Cant, moverFila(NumDeFila,C).
 mover(der, NumDeFila, Cant):- moverFila(NumDeFila,Cant).   
 mover(arriba, NumDeColumna, Cant):- C is 5-Cant, moverColumna(NumDeColumna,C).
 mover(abajo, NumDeColumna, Cant):- moverColumna(NumDeColumna,Cant).
 
-moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X),
+moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X,_),
                                          (NuevaF is ((F+Cant) mod 5),
-                                          assert(celda(NuevaF,NumDeColumna, X)),
-                                          retract(celda(F,NumDeColumna,X)))).
+                                          assert(celda(NuevaF,NumDeColumna, X,_)),
+                                          retract(celda(F,NumDeColumna,X,_)))).
 
-moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X),
+moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X,_),
                                    (NuevaC is ((C+Cant) mod 5),
-                                    assert(celda(NumDeFila,NuevaC, X)),
-                                    retract(celda(NumDeFila,C,X)))).
+                                    assert(celda(NumDeFila,NuevaC, X,_)),
+                                    retract(celda(NumDeFila,C,X,_)))).
 
 
 /* TRANSFORMAR HECHOS A TABLERO */
@@ -47,11 +47,11 @@ hechosATablero(T):- filaALista(0,L1),
                     filaALista(4,L5),
                     T = [L1,L2,L3,L4,L5].
     
-filaALista(Fila,Lista):- celda(Fila,0,M1),
-                         celda(Fila,1,M2),
-                         celda(Fila,2,M3),
-                         celda(Fila,3,M4),
-                         celda(Fila,4,M5),
+filaALista(Fila,Lista):- celda(Fila,0,M1,_),
+                         celda(Fila,1,M2,_),
+                         celda(Fila,2,M3,_),
+                         celda(Fila,3,M4,_),
+                         celda(Fila,4,M5,_),
                          Lista = [M1,M2,M3,M4,M5].
 
 insertar_ultimo(X,[],[X]).
@@ -71,42 +71,42 @@ buscarColapsoFila(NumDeFila,Lista,ListaNueva):-
     ListaNueva=Lista.
 
 buscarColapsoFila(NumDeFila,5,L,Lrta):-
-    celda(NumDeFila,0,X),
-    celda(NumDeFila,1,X),
-    celda(NumDeFila,2,X),
-    celda(NumDeFila,3,X),
-    celda(NumDeFila,4,X),
+    celda(NumDeFila,0,X,_),
+    celda(NumDeFila,1,X,_),
+    celda(NumDeFila,2,X,_),
+    celda(NumDeFila,3,X,_),
+    celda(NumDeFila,4,X,_),
     Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
     insertar_ultimo(Lista,L,Lrta).
 
 buscarColapsoFila(NumDeFila,4,L,Lrta):-
-    celda(NumDeFila,0,X),
-    celda(NumDeFila,1,X),
-    celda(NumDeFila,2,X),
-    celda(NumDeFila,3,X),
+    celda(NumDeFila,0,X,_),
+    celda(NumDeFila,1,X,_),
+    celda(NumDeFila,2,X,_),
+    celda(NumDeFila,3,X,_),
     Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2],[NumDeFila,3]],
     insertar_ultimo(Lista,L,Lrta);
-    celda(NumDeFila,1,X),
-    celda(NumDeFila,2,X),
-    celda(NumDeFila,3,X),
-    celda(NumDeFila,4,X),
+    celda(NumDeFila,1,X,_),
+    celda(NumDeFila,2,X,_),
+    celda(NumDeFila,3,X,_),
+    celda(NumDeFila,4,X,_),
     Lista=[[NumDeFila,1],[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
     insertar_ultimo(Lista,L,Lrta).
  
 buscarColapsoFila(NumDeFila,3,L,Lrta):-
-    celda(NumDeFila,0,X),
-    celda(NumDeFila,1,X),
-    celda(NumDeFila,2,X),
+    celda(NumDeFila,0,X,_),
+    celda(NumDeFila,1,X,_),
+    celda(NumDeFila,2,X,_),
     Lista=[[NumDeFila,0],[NumDeFila,1],[NumDeFila,2]],
     insertar_ultimo(Lista,L,Lrta);   
-    celda(NumDeFila,1,X),
-    celda(NumDeFila,2,X),
-    celda(NumDeFila,3,X),
+    celda(NumDeFila,1,X,_),
+    celda(NumDeFila,2,X,_),
+    celda(NumDeFila,3,X,_),
     Lista=[[NumDeFila,1],[NumDeFila,2],[NumDeFila,3]],
     insertar_ultimo(Lista,L,Lrta);
-    celda(NumDeFila,2,X),
-    celda(NumDeFila,3,X),
-    celda(NumDeFila,4,X),
+    celda(NumDeFila,2,X,_),
+    celda(NumDeFila,3,X,_),
+    celda(NumDeFila,4,X,_),
     Lista=[[NumDeFila,2],[NumDeFila,3],[NumDeFila,4]],
     insertar_ultimo(Lista,L,Lrta).   
 
@@ -124,42 +124,42 @@ buscarColapsoColumna(NumDeColumna,Lista,ListaNueva):-
     ListaNueva=Lista.
 
 buscarColapsoColumna(NumDeColumna,5,L,Lrta):-
-    celda(0,NumDeColumna,X),
-    celda(1,NumDeColumna,X),
-    celda(2,NumDeColumna,X),
-    celda(3,NumDeColumna,X),
-    celda(4,NumDeColumna,X),
+    celda(0,NumDeColumna,X,_),
+    celda(1,NumDeColumna,X,_),
+    celda(2,NumDeColumna,X,_),
+    celda(3,NumDeColumna,X,_),
+    celda(4,NumDeColumna,X,_),
     Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta).
 
 buscarColapsoColumna(NumDeColumna,4,L,Lrta):-
-    celda(0,NumDeColumna,X),
-    celda(1,NumDeColumna,X),
-    celda(2,NumDeColumna,X),
-    celda(3,NumDeColumna,X),
+    celda(0,NumDeColumna,X,_),
+    celda(1,NumDeColumna,X,_),
+    celda(2,NumDeColumna,X,_),
+    celda(3,NumDeColumna,X,_),
     Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta);
-    celda(1,NumDeColumna,X),
-    celda(2,NumDeColumna,X),
-    celda(3,NumDeColumna,X),
-    celda(4,NumDeColumna,X),
+    celda(1,NumDeColumna,X,_),
+    celda(2,NumDeColumna,X,_),
+    celda(3,NumDeColumna,X,_),
+    celda(4,NumDeColumna,X,_),
     Lista=[[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta).
 
 buscarColapsoColumna(NumDeColumna,3,L,Lrta):-
-    celda(0,NumDeColumna,X),
-    celda(1,NumDeColumna,X),
-    celda(2,NumDeColumna,X),
+    celda(0,NumDeColumna,X,_),
+    celda(1,NumDeColumna,X,_),
+    celda(2,NumDeColumna,X,_),
     Lista=[[0,NumDeColumna],[1,NumDeColumna],[2,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta);   
-    celda(1,NumDeColumna,X),
-    celda(2,NumDeColumna,X),
-    celda(3,NumDeColumna,X),
+    celda(1,NumDeColumna,X,_),
+    celda(2,NumDeColumna,X,_),
+    celda(3,NumDeColumna,X,_),
     Lista=[[1,NumDeColumna],[2,NumDeColumna],[3,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta);
-    celda(2,NumDeColumna,X),
-    celda(3,NumDeColumna,X),
-    celda(4,NumDeColumna,X),
+    celda(2,NumDeColumna,X,_),
+    celda(3,NumDeColumna,X,_),
+    celda(4,NumDeColumna,X,_),
     Lista=[[2,NumDeColumna],[3,NumDeColumna],[4,NumDeColumna]],
     insertar_ultimo(Lista,L,Lrta).
 
