@@ -14,24 +14,33 @@ _______________________________________________________*/
 desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
 
               guardarTablero(Tablero),
-              mover(Dir,Num-1,Cant),
-              mostrarTablero(Tablero1),
-              % Agregrar Tablero1 a EvolTablero
+    		  Fila is Num-1,
+              mover(Dir,Fila,Cant),
+    	      hechosATablero(Tablero1),
+    		  insertar_ultimo(Tablero1,[],R1),
               
               buscarTodosLosColapsos(L),
               marcar(L),
               aplicarEstados,
-              mostrarTablero(Tablero2),
-              % Agregrar Tablero2 a EvolTablero
+              hechosATablero(Tablero2),
+    		  insertar_ultimo(Tablero2,R1,R2),
              
               gravedad,
-              mostrarTablero(Tablero3),
-              % Agregrar Tablero3 a EvolTablero
+    		  hechosATablero(Tablero3),
+    		  insertar_ultimo(Tablero3,R2,R3),
              
               generarMamushkasRandom,
-              mostrarTablero(Tablero4),
-              % Agregrar Tablero4 a EvolTablero
+			  hechosATablero(Tablero4),
+    		  insertar_ultimo(Tablero4,R3,R4),
+    		  EvolTablero = R4.
          
+
+% A BORRAR
+verTablero1([T1,_,_,_],T1).
+verTablero2([_,T2,_,_],T2).
+verTablero3([_,_,T3,_],T3).
+verTablero4([_,_,_,T4],T4).
+
 
 guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(0,Fila1),
@@ -53,12 +62,12 @@ mover(abajo, NumDeColumna, Cant):- moverColumna(NumDeColumna,Cant).
 
 moverColumna(NumDeColumna,Cant):- forall(celda(F,NumDeColumna,X,_),
                                          (NuevaF is ((F+Cant) mod 5),
-                                          assert(celda(NuevaF,NumDeColumna, X,_)),
+                                          assert(celda(NuevaF,NumDeColumna, X,sincambios)),
                                           retract(celda(F,NumDeColumna,X,_)))).
 
 moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X,_),
                                    (NuevaC is ((C+Cant) mod 5),
-                                    assert(celda(NumDeFila,NuevaC, X,_)),
+                                    assert(celda(NumDeFila,NuevaC, X,sincambios)),
                                     retract(celda(NumDeFila,C,X,_)))).
 /*------------------------------------------------------------------------*/
 /* DPS HAY Q BORRAR ESTOS PREDICADOS PQ NO NOS SIRVER*/
@@ -360,7 +369,7 @@ pasarListaGravedadAHechos(NumDeColumna,[E4,E3,E2,E1,E0]):-
 
 
 generarMamushkasRandom:-
-            forall(celda(F,C,x,_),
+    		forall(celda(F,C,x,_),
                    (retract(celda(F,C,x,_)),
                     random_member(R,[r1,v1,a1]),
                     assert(celda(F,C,R,_)))).
