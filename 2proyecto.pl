@@ -297,7 +297,14 @@ actualizarMamushka(a1,agrandar,a2).
 actualizarMamushka(a2,agrandar,a3).
 actualizarMamushka(a3,agrandar,a3).
 
-recorrerColumna(NumDeColumna,Rta):-
+gravedad:-
+    recorrerColumna(0),
+    recorrerColumna(1),
+    recorrerColumna(2),
+    recorrerColumna(3),
+    recorrerColumna(4).
+
+recorrerColumna(NumDeColumna):-
     celda(0,NumDeColumna,Valor0,_),
     celda(1,NumDeColumna,Valor1,_),
     celda(2,NumDeColumna,Valor2,_),
@@ -305,9 +312,8 @@ recorrerColumna(NumDeColumna,Rta):-
     celda(4,NumDeColumna,Valor4,_),
     Lista=[Valor4,Valor3,Valor2,Valor1,Valor0],
     listaOrdenada(Lista,NuevaL),
-    rellenarColumna(NuevaL,Rta).
-
-
+    rellenarColumna(NuevaL,Rta),
+    pasarListaGravedadAHechos(NumDeColumna,Rta).
     
 listaOrdenada([],[]).  
 listaOrdenada([X|Xs],Lrta):-
@@ -323,34 +329,15 @@ rellenarColumna([E1,E2],[E1,E2,x,x,x]).
 rellenarColumna([E1,E2,E3],[E1,E2,E3,x,x]).
 rellenarColumna([E1,E2,E3,E4],[E1,E2,E3,E4,x]).
 rellenarColumna([E1,E2,E3,E4,E5],[E1,E2,E3,E4,E5]).
-           
 
-
-/*
-CONSULTA
-guardarTablero([[r1, v2, a1, r1, a1],[a2, v1, v1, r2, r2],[a1, r2, a3, v1, a2],[r3, r2, r1, a3, v1],[v3, a1, v2,
-r2, v1]]), mostrarTablero(Tablero).
-*/
-
-
-/*
-OTRA CONSULTA MAS FACIL:
-guardarTablero([[1, 2, 3, 4, 5],[6, 7, 8, 9, 10],[11, 12, 13, 14, 15],[16, 17, 18, 19, 20],[21, 22, 23,
-24, 25]]),
-mostrarTablero(Tablero1),
-mover(der,0,1),
-mostrarTablero(Tablero2).
-*/
-
-/*
-CONSULTA PICANTE
-guardarTablero( [[r1, v2, a1, a1, a1],[a2, v1, v1, r2, r2],[a1, v1, a3, v1, a2],[v1, v1, v1, a3, v1],[v3, a1,
-v2, r2, v1]]),
-mostrarTablero(Tablero),
-buscarTodosLosColapsos(L), 
-marcar(L),
-mostrarEstados(Estados),
-aplicarEstados,
-mostrarTablero(Tablero1),
-mostrarEstados(Estados2).
-*/
+pasarListaGravedadAHechos(NumDeColumna,[E4,E3,E2,E1,E0]):-
+    retract(celda(4,NumDeColumna,_,_)),
+    assert(celda(4,NumDeColumna,E4,sincambios)),
+    retract(celda(3,NumDeColumna,_,_)),
+    assert(celda(3,NumDeColumna,E3,sincambios)),
+    retract(celda(2,NumDeColumna,_,_)),
+    assert(celda(2,NumDeColumna,E2,sincambios)),
+    retract(celda(1,NumDeColumna,_,_)),
+    assert(celda(1,NumDeColumna,E1,sincambios)),
+    retract(celda(0,NumDeColumna,_,_)),
+    assert(celda(0,NumDeColumna,E0,sincambios)).
