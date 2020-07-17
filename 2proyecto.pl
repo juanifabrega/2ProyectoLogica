@@ -71,7 +71,7 @@ estadosATablero(T):-filaAListaEstados(0,L1),
                     filaAListaEstados(4,L5),
                     T = [L1,L2,L3,L4,L5].
 filaAListaEstados(Fila,Lista):-
-    					 celda(Fila,0,_,M1),
+                         celda(Fila,0,_,M1),
                          celda(Fila,1,_,M2),
                          celda(Fila,2,_,M3),
                          celda(Fila,3,_,M4),
@@ -271,9 +271,33 @@ ponerCentro(L):-
     
 marcarCentrosFinal(L):-
     forall(member(ListaColapso,L),
-           tieneCentro(ListaColapso)         
-           ).
+           tieneCentro(ListaColapso)).
+
 marcar(L):- marcarColapsosYcentrosComunes(L), marcarCentrosFinal(L).
+
+
+/*  Si el Estado es "agrandar", se agranda la mamushka.
+    Si es "borrar", se reemplaza la mamushka por una "x".
+    Si es "sincambios", no se hace ningun cambio. */
+aplicarEstados:- forall(celda(F,C,Mamushka,Estado),
+                       (actualizarMamushka(Mamushka,Estado,NuevaMamushka),
+                        retract(celda(F,C,Mamushka,Estado)),
+                        assert(celda(F,C,NuevaMamushka,sincambios));
+                       true)).   
+
+% actualizarMamushka(MamushkaActual,EstadoAAplicarle,NuevaMamushka)   
+actualizarMamushka(_,borrar,x).                     
+actualizarMamushka(r1,agrandar,r2).
+actualizarMamushka(r2,agrandar,r3).
+actualizarMamushka(r3,agrandar,r3).
+actualizarMamushka(v1,agrandar,v2).
+actualizarMamushka(v2,agrandar,v3).
+actualizarMamushka(v3,agrandar,v3).
+actualizarMamushka(a1,agrandar,a2).
+actualizarMamushka(a2,agrandar,a3).
+actualizarMamushka(a3,agrandar,a3).
+           
+
 
 /*
 CONSULTA
@@ -289,4 +313,17 @@ guardarTablero([[1, 2, 3, 4, 5],[6, 7, 8, 9, 10],[11, 12, 13, 14, 15],[16, 17, 1
 mostrarTablero(Tablero1),
 mover(der,0,1),
 mostrarTablero(Tablero2).
+*/
+
+/*
+CONSULTA PICANTE
+guardarTablero( [[r1, v2, a1, a1, a1],[a2, v1, v1, r2, r2],[a1, v1, a3, v1, a2],[v1, v1, v1, a3, v1],[v3, a1,
+v2, r2, v1]]),
+mostrarTablero(Tablero),
+buscarTodosLosColapsos(L), 
+marcar(L),
+mostrarEstados(Estados),
+aplicarEstados,
+mostrarTablero(Tablero1),
+mostrarEstados(Estados2).
 */
