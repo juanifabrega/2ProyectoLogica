@@ -10,12 +10,28 @@ LEYENDA CELDA:
       EstadoActual: sincambios, borrar, agrandar
 _______________________________________________________*/
 
- /*desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
-    guardarTablero(Tablero),
-    mover(Dir,Num-1,Cant),
-    buscarTodosLosColapsos(L),
-    
-    */
+
+desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
+
+              guardarTablero(Tablero),
+              mover(Dir,Num-1,Cant),
+              mostrarTablero(Tablero1),
+              % Agregrar Tablero1 a EvolTablero
+              
+              buscarTodosLosColapsos(L),
+              marcar(L),
+              aplicarEstados,
+              mostrarTablero(Tablero2),
+              % Agregrar Tablero2 a EvolTablero
+             
+              gravedad,
+              mostrarTablero(Tablero3),
+              % Agregrar Tablero3 a EvolTablero
+             
+              generarMamushkasRandom,
+              mostrarTablero(Tablero4),
+              % Agregrar Tablero4 a EvolTablero
+         
 
 guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(0,Fila1),
@@ -341,3 +357,11 @@ pasarListaGravedadAHechos(NumDeColumna,[E4,E3,E2,E1,E0]):-
     assert(celda(1,NumDeColumna,E1,sincambios)),
     retract(celda(0,NumDeColumna,_,_)),
     assert(celda(0,NumDeColumna,E0,sincambios)).
+
+
+generarMamushkasRandom:-
+            forall(celda(F,C,x,_),
+                   (retract(celda(F,C,x,_)),
+                    random_member(R,[r1,v1,a1]),
+                    assert(celda(F,C,R,_)))).
+
