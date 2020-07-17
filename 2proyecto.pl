@@ -10,7 +10,6 @@ LEYENDA CELDA:
       EstadoActual: sincambios, borrar, agrandar
 _______________________________________________________*/
 
-
 desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
 
               guardarTablero(Tablero),
@@ -41,7 +40,6 @@ verTablero2([_,T2,_,_],T2).
 verTablero3([_,_,T3,_],T3).
 verTablero4([_,_,_,T4],T4).
 
-
 guardarTablero([Fila1,Fila2,Fila3,Fila4,Fila5]):-
     guardarFila(0,Fila1),
     guardarFila(1,Fila2),
@@ -69,10 +67,6 @@ moverFila(NumDeFila,Cant):- forall(celda(NumDeFila,C,X,_),
                                    (NuevaC is ((C+Cant) mod 5),
                                     assert(celda(NumDeFila,NuevaC, X,sincambios)),
                                     retract(celda(NumDeFila,C,X,_)))).
-/*------------------------------------------------------------------------*/
-/* DPS HAY Q BORRAR ESTOS PREDICADOS PQ NO NOS SIRVER*/
-/* mostrar tablero */
-mostrarTablero(T):- hechosATablero(T).
 
 hechosATablero(T):- filaALista(0,L1),
                     filaALista(1,L2),
@@ -87,22 +81,6 @@ filaALista(Fila,Lista):- celda(Fila,0,M1,_),
                          celda(Fila,3,M4,_),
                          celda(Fila,4,M5,_),
                          Lista = [M1,M2,M3,M4,M5].
-/*mostrar estados*/
-mostrarEstados(T):- estadosATablero(T).
-estadosATablero(T):-filaAListaEstados(0,L1),
-                    filaAListaEstados(1,L2),
-                    filaAListaEstados(2,L3),
-                    filaAListaEstados(3,L4),
-                    filaAListaEstados(4,L5),
-                    T = [L1,L2,L3,L4,L5].
-filaAListaEstados(Fila,Lista):-
-                         celda(Fila,0,_,M1),
-                         celda(Fila,1,_,M2),
-                         celda(Fila,2,_,M3),
-                         celda(Fila,3,_,M4),
-                         celda(Fila,4,_,M5),
-                         Lista = [M1,M2,M3,M4,M5].        
-/*----------------------------------------------------------------------*/
 
 insertar_ultimo(X,[],[X]).
 insertar_ultimo(X,[Y|L2],[Y|L3]):- insertar_ultimo(X,L2,L3). 
@@ -300,7 +278,6 @@ marcarCentrosFinal(L):-
 
 marcar(L):- marcarColapsosYcentrosComunes(L), marcarCentrosFinal(L).
 
-
 /*  Si el Estado es "agrandar", se agranda la mamushka.
     Si es "borrar", se reemplaza la mamushka por una "x".
     Si es "sincambios", no se hace ningun cambio. */
@@ -367,10 +344,8 @@ pasarListaGravedadAHechos(NumDeColumna,[E4,E3,E2,E1,E0]):-
     retract(celda(0,NumDeColumna,_,_)),
     assert(celda(0,NumDeColumna,E0,sincambios)).
 
-
 generarMamushkasRandom:-
     		forall(celda(F,C,x,_),
                    (retract(celda(F,C,x,_)),
                     random_member(R,[r1,v1,a1]),
                     assert(celda(F,C,R,_)))).
-
