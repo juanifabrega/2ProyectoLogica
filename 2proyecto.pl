@@ -296,6 +296,33 @@ actualizarMamushka(v3,agrandar,v3).
 actualizarMamushka(a1,agrandar,a2).
 actualizarMamushka(a2,agrandar,a3).
 actualizarMamushka(a3,agrandar,a3).
+
+recorrerColumna(NumDeColumna,Rta):-
+    celda(0,NumDeColumna,Valor0,_),
+    celda(1,NumDeColumna,Valor1,_),
+    celda(2,NumDeColumna,Valor2,_),
+    celda(3,NumDeColumna,Valor3,_),
+    celda(4,NumDeColumna,Valor4,_),
+    Lista=[Valor4,Valor3,Valor2,Valor1,Valor0],
+    listaOrdenada(Lista,NuevaL),
+    rellenarColumna(NuevaL,Rta).
+
+
+    
+listaOrdenada([],[]).  
+listaOrdenada([X|Xs],Lrta):-
+    X==x,
+    listaOrdenada(Xs,L),
+    Lrta=L;
+    listaOrdenada(Xs,L),
+    Lrta=[X|L].
+
+rellenarColumna([],[x,x,x,x,x]).
+rellenarColumna([E1],[E1,x,x,x,x]).
+rellenarColumna([E1,E2],[E1,E2,x,x,x]).
+rellenarColumna([E1,E2,E3],[E1,E2,E3,x,x]).
+rellenarColumna([E1,E2,E3,E4],[E1,E2,E3,E4,x]).
+rellenarColumna([E1,E2,E3,E4,E5],[E1,E2,E3,E4,E5]).
            
 
 
