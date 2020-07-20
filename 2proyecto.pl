@@ -35,10 +35,10 @@ desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
 mostrarTableros(Evol,T1,T2,T3,T4):-
                                 length(Evol,4), !,
                                 verTodosLosTableros(Evol,T1,T2,T3,T4);
-                                verSoloPrimerTablero(Evol,T1).
+                                verPrimerTablero(Evol,T1).
                     
 verTodosLosTableros([T1,T2,T3,T4],T1,T2,T3,T4). 
-verSoloPrimerTablero([T1],T1).
+verPrimerTablero([T1],T1).
 
 
 borrarRepetidos([T1,T2,T3,T4],Rdo):-
